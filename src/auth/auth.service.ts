@@ -128,7 +128,7 @@ export class AuthService {
 
   async register(newUser: UserRegistration) {
     const user = await this.userService.registerUser(newUser);
-    await this.resendEmailVerificationCode(user.email);
+    return await this.resendEmailVerificationCode(user.email);
     //return await this.getTokens(user.id, user.email);
   }
 
@@ -168,6 +168,7 @@ export class AuthService {
       { _id: user.id },
       { isActive: true, isEmailAddressVerified: true },
     );
+    return { success: true };
   }
 
   async resendEmailVerificationCode(email: string) {
@@ -189,7 +190,7 @@ export class AuthService {
       type: AUTH_CODE_TYPE_ENUM.email_verification,
       expiresAt: new Date(new Date().getTime() + AUTH_CODE_EXPIRY),
     });
-    return { created: true };
+    return { success: true };
     await this.mailingService.sendVerificationEmail(
       user.email,
       String(verificationCode),
@@ -258,7 +259,7 @@ export class AuthService {
       type: AUTH_CODE_TYPE_ENUM.password_reset_verification,
       expiresAt: new Date(new Date().getTime() + AUTH_CODE_EXPIRY),
     });
-    return { created: true };
+    return { success: true };
     await this.mailingService.sendPasswordResetAuthCodeEmail(
       user.email,
       String(verificationCode),
