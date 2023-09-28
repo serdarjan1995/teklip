@@ -45,7 +45,7 @@ export const checkNumber = (phoneNumber: string) => {
 };
 
 export const generateCode = (length: number): number => {
-  if (process.env.NODE_ENV !== 'production' && false) {
+  if (process.env.NODE_ENV !== 'production') {
     return 777777;
   }
   let result = '';
