@@ -172,11 +172,4 @@ export class VehicleAdditionalDetailsModel {
     description: 'Has Sunroof',
   })
   hasSunroof: boolean;
-
-  @IsBoolean()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Has Sunroof',
-  })
-  hasSunroof: boolean;
 }
