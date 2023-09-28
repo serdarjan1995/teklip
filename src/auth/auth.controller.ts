@@ -28,16 +28,19 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @HttpCode(200)
   async registerUser(@Body() newUser: UserRegistration) {
     return await this.authService.register(newUser);
   }
 
   @Post('verify-email')
+  @HttpCode(200)
   async verifyEmail(@Body() verifyEmail: EmailVerifyModel) {
     return await this.authService.verifyEmail(verifyEmail);
   }
 
   @Post('resend-verification-email')
+  @HttpCode(200)
   async resendVerificationEmail(@Body('email') email: string) {
     return await this.authService.resendEmailVerificationCode(email);
   }
@@ -53,6 +56,7 @@ export class AuthController {
 
   @UseGuards(AccessTokenGuard)
   @Get('user')
+  @HttpCode(200)
   async user(@Req() request: RequestWithUser) {
     const user = request.user;
     //user.password = undefined;
@@ -61,17 +65,20 @@ export class AuthController {
 
   @UseGuards(RefreshTokenGuard)
   @Post('refresh')
+  @HttpCode(200)
   refreshTokens(@Req() req: RequestWithUser) {
     const userId = req.user['id'];
     return this.authService.refreshTokens(userId);
   }
 
   @Post('forgot-password')
+  @HttpCode(200)
   async forgotPassword(@Body('email') email: string) {
     return await this.authService.sendPasswordResetAuthCode(email);
   }
 
   @Post('forgot-password/check-code')
+  @HttpCode(200)
   async forgotPasswordCheckCode(
     @Body() passwordResetCheckAuthCodeModel: PasswordResetCheckAuthCodeModel,
   ) {
@@ -81,6 +88,7 @@ export class AuthController {
   }
 
   @Post('forgot-password/reset')
+  @HttpCode(200)
   async forgotPasswordChange(@Body() passwordResetModel: PasswordResetModel) {
     return await this.authService.resetUserPassword(passwordResetModel);
   }
